@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JenisDokumenController;
+use App\Http\Controllers\KriteriaPenilaianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +29,17 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('auth-logout');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 //User routes
-Route::get('/user', [UserController::class, 'index'])->name('user.index');
-Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+Route::get('/users', [UserController::class, 'index'])->name('user.index');
+Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+
+//Jenis Dokumen routes
+Route::get('/jenis-dokumen', [JenisDokumenController::class, 'index'])->name('jenis-dokumen.index');
+Route::post('/jenis-dokumen', [JenisDokumenController::class, 'store'])->name('jenis-dokumen.store');
+Route::put('/jenis-dokumen/{id}', [JenisDokumenController::class, 'update'])->name('jenis-dokumen.update');
+Route::delete('/jenis-dokumen/{id}', [JenisDokumenController::class, 'destroy'])->name('jenis-dokumen.destroy');
+
+//Kriteria Penilaian routes
+Route::get('/kriteria-penilaian/{jenis_dokumen_id}', [KriteriaPenilaianController::class, 'index'])->name('kriteria-penilaian.index');
+Route::post('/kriteria-penilaian', [KriteriaPenilaianController::class, 'store'])->name('kriteria-penilaian.store');
+Route::put('/kriteria-penilaian/{id}', [KriteriaPenilaianController::class, 'update'])->name('kriteria-penilaian.update');
+Route::delete('/kriteria-penilaian/{id}', [KriteriaPenilaianController::class, 'destroy'])->name('kriteria-penilaian.destroy');

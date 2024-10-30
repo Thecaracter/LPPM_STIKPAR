@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->text('spesifikasi_outcome');
             $table->string('file_proposal_pdf');
             $table->string('file_proposal_word');
-            $table->foreignId('jenis_dokumen_id')->constrained('jenis_dokumen')->onDelete('cascade');
+            $table->foreignUuid('jenis_dokumen_id')->constrained('jenis_dokumen')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('reviewer_id')->nullable()->constrained('users')->onDelete('set null');
             $table->enum('status', [
@@ -33,6 +33,7 @@ return new class extends Migration {
             $table->text('catatan_reviewer')->nullable();
             $table->timestamp('tanggal_review')->nullable();
             $table->timestamp('tanggal_submit')->nullable();
+            $table->integer('nilai')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
