@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PenilaianDokumen extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory;
 
     protected $table = 'penilaian_dokumen';
 
@@ -21,11 +20,12 @@ class PenilaianDokumen extends Model
     ];
 
     protected $casts = [
+        'dokumen_id' => 'string', // Karena dokumen pakai UUID
+        'kriteria_penilaian_id' => 'integer', // Karena kriteria pakai auto increment
         'skor' => 'decimal:2',
         'nilai' => 'decimal:2'
     ];
 
-    // Basic Relationships
     public function dokumen()
     {
         return $this->belongsTo(Dokumen::class);
@@ -36,7 +36,6 @@ class PenilaianDokumen extends Model
         return $this->belongsTo(KriteriaPenilaian::class, 'kriteria_penilaian_id');
     }
 
-    // Simple method to calculate nilai
     protected static function boot()
     {
         parent::boot();

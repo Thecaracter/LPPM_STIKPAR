@@ -45,65 +45,41 @@
                 </li>
                 <li class="nav-item {{ Request::path() == 'users' ? 'active' : '' }}">
                     <a href="{{ url('users') }}">
-                        <i class="fas fa-users"></i> <!-- Diganti dengan icon users -->
+                        <i class="fas fa-users"></i>
                         <p>User</p>
                     </a>
                 </li>
                 <li class="nav-item {{ Request::path() == 'jenis-dokumen' ? 'active' : '' }}">
                     <a href="{{ url('jenis-dokumen') }}">
-                        <i class="fas fa-file-alt"></i> <!-- Diganti dengan icon document -->
+                        <i class="fas fa-file-alt"></i>
                         <p>Jenis Dokumen</p>
                     </a>
                 </li>
+                <li class="nav-item {{ Request::path() == 'anggota-tim' ? 'active' : '' }}">
+                    <a href="{{ url('anggota-tim') }}">
+                        <i class="fas fa-users-cog"></i>
+                        <p>Anggota Tim</p>
+                    </a>
+                </li>
+                <li class="nav-section">
+                    <span class="sidebar-mini-icon">
+                        <i class="fa fa-ellipsis-h"></i>
+                    </span>
+                    <h4 class="text-section">Pengajuan</h4>
+                </li>
+                <li class="nav-item {{ Request::path() == 'dokumen' ? 'active' : '' }}">
+                    <a href="{{ url('dokumen') }}">
+                        <i class="fas fa-file-upload"></i>
+                        <p>Pengajuan Dokumen</p>
+                    </a>
+                </li>
+                <li class="nav-item {{ Request::path() == 'review' ? 'active' : '' }}">
+                    <a href="{{ url('review') }}">
+                        <i class="fas fa-file-upload"></i>
+                        <p>Review Dokumen</p>
+                    </a>
+                </li>
 
-                <li class="nav-section">
-                    <span class="sidebar-mini-icon">
-                        <i class="fa fa-ellipsis-h"></i>
-                    </span>
-                    <h4 class="text-section">SubMenu</h4>
-                </li>
-                <li class="nav-item {{ Request::path() == 'obatmasuk' ? 'active' : '' }}">
-                    <a href="{{ url('obatmasuk') }}">
-                        <i class="fas fa-pills"></i>
-                        <p>Obat Masuk</p>
-                    </a>
-                </li>
-                <li class="nav-item {{ Request::path() == 'kunjungan' ? 'active' : '' }}">
-                    <a href="{{ url('kunjungan') }}">
-                        <i class="fas fa-stethoscope"></i>
-                        <p>Kunjungan</p>
-                    </a>
-                </li>
-                <li class="nav-item {{ Request::path() == 'pemeriksaan-awal' ? 'active' : '' }}">
-                    <a href="{{ url('pemeriksaan-awal') }}">
-                        <i class="fas fa-user-md"></i>
-                        <p>Pemeriksaan Awal</p>
-                    </a>
-                </li>
-                <li class="nav-item {{ Request::path() == 'pemeriksaan' ? 'active' : '' }}">
-                    <a href="{{ url('pemeriksaan') }}">
-                        <i class="fas fa-notes-medical"></i>
-                        <p>Pemeriksaan</p>
-                    </a>
-                </li>
-                <li class="nav-section">
-                    <span class="sidebar-mini-icon">
-                        <i class="fa fa-ellipsis-h"></i>
-                    </span>
-                    <h4 class="text-section">Pembayaran & Riwayat</h4>
-                </li>
-                <li class="nav-item {{ Request::path() == 'pembayaran' ? 'active' : '' }}">
-                    <a href="{{ url('pembayaran') }}">
-                        <i class="fas fa-money-bill-wave"></i>
-                        <p>Pembayaran</p>
-                    </a>
-                </li>
-                <li class="nav-item {{ Request::path() == 'riwayat' ? 'active' : '' }}">
-                    <a href="{{ url('riwayat') }}">
-                        <i class="fas fa-history"></i>
-                        <p>Riwayat Kunjungan</p>
-                    </a>
-                </li>
             </ul>
         </div>
     </div>

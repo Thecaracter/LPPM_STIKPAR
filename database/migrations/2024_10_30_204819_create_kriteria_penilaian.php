@@ -18,7 +18,7 @@ return new class extends Migration {
 
         Schema::create('penilaian_dokumen', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('dokumen_id')->constrained('dokumen')->onDelete('cascade');
+            $table->foreignUuid('dokumen_id')->constrained('dokumen')->onDelete('cascade');
             $table->foreignId('kriteria_penilaian_id')->constrained('kriteria_penilaian')->onDelete('cascade');
             $table->decimal('skor', 5, 2);
             $table->decimal('nilai', 8, 2);

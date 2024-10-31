@@ -5,11 +5,10 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-
     public function up(): void
     {
         Schema::create('dokumen', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('judul_penelitian');
             $table->text('abstrak_penelitian');
             $table->text('metode_penelitian');
@@ -36,7 +35,6 @@ return new class extends Migration {
             $table->integer('nilai')->nullable();
             $table->timestamps();
             $table->softDeletes();
-
 
             $table->index('judul_penelitian');
             $table->index('status');
