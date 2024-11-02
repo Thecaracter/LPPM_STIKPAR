@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\DokumenController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AnggotaTimController;
 use App\Http\Controllers\JenisDokumenController;
@@ -31,6 +32,7 @@ Route::middleware('auth')->group(function () {
         // Users Management
         Route::get('/users', [UserController::class, 'index'])->name('user.index');
         Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+        Route::post('/user', [UserController::class, 'store'])->name('user.store');
 
         // Jenis Dokumen Management
         Route::get('/jenis-dokumen', [JenisDokumenController::class, 'index'])->name('jenis-dokumen.index');
@@ -67,4 +69,6 @@ Route::middleware('auth')->group(function () {
     // Riwayat & Cetak (All authenticated users)
     Route::get('/riwayat', [RiwayatDokumenController::class, 'index'])->name('riwayat.index');
     Route::get('/cetak-penilaian/{id}', [CetakPenilaianController::class, 'show'])->name('cetak-penilaian.show');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
