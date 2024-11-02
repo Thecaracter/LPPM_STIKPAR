@@ -17,6 +17,13 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         try {
+            // Log request login
+            Log::info('Percobaan login', [
+                'email' => $request->email,
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent()
+            ]);
+
             $credentials = $request->validate([
                 'email' => 'required|email',
                 'password' => 'required'
@@ -25,18 +32,42 @@ class AuthController extends Controller
             if (Auth::attempt($credentials)) {
                 $request->session()->regenerate();
 
+                // Log login berhasil 
+                Log::info('Login berhasil', [
+                    'user_id' => auth()->id(),
+                    'email' => auth()->user()->email,
+                    'ip_address' => $request->ip(),
+                    'user_agent' => $request->userAgent()
+                ]);
+
                 return redirect()->intended('/dashboard')->with('alert', [
                     'type' => 'success',
                     'message' => 'Login berhasil!'
                 ]);
-
             }
+
+            // Log login gagal - kredensial salah
+            Log::warning('Login gagal - kredensial salah', [
+                'email' => $request->email,
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent()
+            ]);
 
             return back()->with('alert', [
                 'type' => 'error',
                 'message' => 'Email atau password salah!'
             ]);
+
         } catch (\Exception $e) {
+
+            Log::error('Error saat login', [
+                'error_message' => $e->getMessage(),
+                'error_trace' => $e->getTraceAsString(),
+                'email' => $request->email,
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent()
+            ]);
+
             return back()->with('alert', [
                 'type' => 'error',
                 'message' => 'Terjadi kesalahan saat login. Silakan coba lagi.'
