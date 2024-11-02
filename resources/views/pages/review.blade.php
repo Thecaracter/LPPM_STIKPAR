@@ -45,7 +45,7 @@
                                     <tbody>
                                         @forelse($dokumen as $key => $item)
                                             <tr>
-                                                <td>{{ $key + 1 }}</td>
+                                                <td>{{ $dokumen->firstItem() + $key }}</td>
                                                 <td>{{ $item->judul_penelitian }}</td>
                                                 <td>{{ $item->user->name }}</td>
                                                 <td>{{ $item->jenisDokumen->nama }}</td>
@@ -78,6 +78,9 @@
                                         @endforelse
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="mt-4 d-flex justify-content-center">
+                                {{ $dokumen->links('pagination::bootstrap-4') }}
                             </div>
                         </div>
                     </div>
@@ -197,7 +200,6 @@
                             </div>
 
                             <div id="kriteriaPenilaian{{ $item->id }}" class="kriteria-section">
-                                <!-- Kriteria penilaian akan di-load secara dinamis -->
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -217,36 +219,21 @@
         $(document).ready(function() {
             $('#basic-datatables').DataTable({
                 "ordering": false,
-                "pageLength": 10,
+                "searching": true,
+                "paging": false,
+                "info": false,
                 "language": {
-                    "decimal": "",
-                    "emptyTable": "Tidak ada data yang tersedia",
-                    "info": "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-                    "infoEmpty": "Menampilkan 0 sampai 0 dari 0 data",
-                    "infoFiltered": "(difilter dari _MAX_ total data)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Tampilkan _MENU_ data",
-                    "loadingRecords": "Memuat...",
-                    "processing": "Memproses...",
                     "search": "Cari:",
                     "zeroRecords": "Tidak ditemukan data yang sesuai",
-                    "paginate": {
-                        "first": "Pertama",
-                        "last": "Terakhir",
-                        "next": "Selanjutnya",
-                        "previous": "Sebelumnya"
-                    }
+                    "emptyTable": "Tidak ada data yang tersedia"
                 }
             });
         });
 
         function openReviewModal(dokumenId) {
-            // Reset form
             $(`#formReview${dokumenId}`)[0].reset();
             $(`#kriteriaPenilaian${dokumenId}`).html('');
 
-            // Remove previous event handler and attach new one
             $(`#formReview${dokumenId} select[name="status"]`).off('change').on('change', function() {
                 if ($(this).val() === 'berhasil') {
                     loadKriteria(dokumenId);
@@ -274,26 +261,26 @@
                         let html = '<h5 class="mb-3">Kriteria Penilaian</h5>';
                         response.data.forEach(function(kriteria) {
                             html += `
-                                <div class="form-group">
-                                    <label>${kriteria.nama_kriteria} (Bobot: ${kriteria.bobot}%) <span class="text-danger">*</span></label>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <input type="number" step="0.1" name="penilaian[${kriteria.id}][skor]"
-                                                   class="form-control" placeholder="Skor (0-10)"
-                                                   required min="0" max="10"
-                                                   value="${kriteria.penilaian && kriteria.penilaian[0] ? kriteria.penilaian[0].skor : ''}">
-                                            <input type="hidden" name="penilaian[${kriteria.id}][kriteria_id]"
-                                                   value="${kriteria.id}">
-                                            <small class="form-text text-muted">Masukkan nilai 0-10</small>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <input type="text" name="penilaian[${kriteria.id}][justifikasi]"
-                                                   class="form-control" placeholder="Justifikasi penilaian" required
-                                                   value="${kriteria.penilaian && kriteria.penilaian[0] ? kriteria.penilaian[0].justifikasi : ''}">
+                                    <div class="form-group">
+                                        <label>${kriteria.nama_kriteria} (Bobot: ${kriteria.bobot}%) <span class="text-danger">*</span></label>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <input type="number" step="0.1" name="penilaian[${kriteria.id}][skor]"
+                                                       class="form-control" placeholder="Skor (0-10)"
+                                                       required min="0" max="10"
+                                                       value="${kriteria.penilaian && kriteria.penilaian[0] ? kriteria.penilaian[0].skor : ''}">
+                                                <input type="hidden" name="penilaian[${kriteria.id}][kriteria_id]"
+                                                       value="${kriteria.id}">
+                                                <small class="form-text text-muted">Masukkan nilai 0-10</small>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <input type="text" name="penilaian[${kriteria.id}][justifikasi]"
+                                                       class="form-control" placeholder="Justifikasi penilaian" required
+                                                       value="${kriteria.penilaian && kriteria.penilaian[0] ? kriteria.penilaian[0].justifikasi : ''}">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            `;
+                                `;
                         });
                         $(`#kriteriaPenilaian${dokumenId}`).html(html);
                     } else {
@@ -318,13 +305,11 @@
             const dokumenId = form.attr('id').replace('formReview', '');
             const status = form.find('select[name="status"]').val();
 
-            // Validate form
             if (!form[0].checkValidity()) {
                 form[0].reportValidity();
                 return;
             }
 
-            // Special validation for 'berhasil' status
             if (status === 'berhasil' && form.find('input[name^="penilaian"]').length === 0) {
                 Swal.fire({
                     icon: 'error',
@@ -334,7 +319,6 @@
                 return;
             }
 
-            // Disable submit button
             form.find('button[type="submit"]').prop('disabled', true);
 
             Swal.fire({
@@ -385,18 +369,15 @@
                             });
                         },
                         complete: function() {
-                            // Re-enable submit button
                             form.find('button[type="submit"]').prop('disabled', false);
                         }
                     });
                 } else {
-                    // Re-enable submit button if cancelled
                     form.find('button[type="submit"]').prop('disabled', false);
                 }
             });
         });
 
-        // Session messages
         @if (session('success'))
             Swal.fire({
                 icon: 'success',

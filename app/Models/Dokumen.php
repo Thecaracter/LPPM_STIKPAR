@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
@@ -55,12 +56,16 @@ class Dokumen extends Model
         'reviewer_id' => 'string'
     ];
 
-
     const STATUS_SUBMITTED = 'submitted';
     const STATUS_REVISI = 'revisi';
     const STATUS_DITOLAK = 'ditolak';
     const STATUS_BERHASIL = 'berhasil';
 
+    // Add the penilaian relationship
+    public function penilaian(): HasMany
+    {
+        return $this->hasMany(PenilaianDokumen::class, 'dokumen_id');
+    }
 
     public function jenisDokumen(): BelongsTo
     {
@@ -76,7 +81,6 @@ class Dokumen extends Model
     {
         return $this->belongsTo(User::class, 'reviewer_id');
     }
-
 
     public function scopeStatus($query, $status)
     {
@@ -123,7 +127,6 @@ class Dokumen extends Model
     {
         return $query->where('jenis_dokumen_id', $jenisDokumenId);
     }
-
 
     public function isSubmitted(): bool
     {

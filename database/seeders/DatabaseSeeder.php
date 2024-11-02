@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             AnggotaTimSeeder::class,
             JenisDokumenSeeder::class,
             KriteriaPenilaianPkmSeeder::class,
+            DokumenSeeder::class
         ]);
     }
 }

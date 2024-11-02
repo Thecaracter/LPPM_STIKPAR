@@ -31,12 +31,12 @@ class UserSeeder extends Seeder
             'no_hp' => '081234567890'
         ]);
 
-        // Create Reviewer
+        // Create Reviewer 1
         User::create([
-            'email' => 'reviewer@reviewer.com',
+            'email' => 'reviewer1@reviewer.com',
             'password' => Hash::make('password'),
             'role' => 'reviewer',
-            'name' => 'Reviewer',
+            'name' => 'Reviewer 1',
             'tempat_lahir' => 'Bandung',
             'tanggal_lahir' => '1985-01-01',
             'nik' => '2234567890123456',
@@ -46,6 +46,23 @@ class UserSeeder extends Seeder
             'program_studi' => 'Sistem Informasi',
             'alamat_domisili' => 'Bandung',
             'no_hp' => '082234567890'
+        ]);
+
+        // Create Reviewer 2
+        User::create([
+            'email' => 'reviewer2@reviewer.com',
+            'password' => Hash::make('password'),
+            'role' => 'reviewer',
+            'name' => 'Reviewer 2',
+            'tempat_lahir' => 'Surabaya',
+            'tanggal_lahir' => '1987-05-15',
+            'nik' => '3234567890123456',
+            'nidn_nuptk' => '3234567890',
+            'jabatan_akademik' => 'Lektor Kepala',
+            'bidang_keahlian' => 'Manajemen',
+            'program_studi' => 'Manajemen',
+            'alamat_domisili' => 'Surabaya',
+            'no_hp' => '083234567890'
         ]);
 
         // Create Regular User

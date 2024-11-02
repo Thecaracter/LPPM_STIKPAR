@@ -7,7 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     <link rel="icon" href="{{ asset('custom/assetsFoto/logo.png') }}" type="image/x-icon" />
     <link rel="stylesheet" href="{{ asset('custom/css/pagination.css') }}" />
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
     <!-- Fonts and icons -->
     <script src="{{ asset('admin/assets/js/plugin/webfont/webfont.min.js') }}"></script>

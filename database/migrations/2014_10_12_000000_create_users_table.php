@@ -32,6 +32,7 @@ return new class extends Migration {
             $table->string('program_studi');
             $table->text('alamat_domisili');
             $table->string('no_hp');
+
             $table->rememberToken();
             $table->timestamps();
         });

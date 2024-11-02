@@ -37,49 +37,67 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-section">
-                    <span class="sidebar-mini-icon">
-                        <i class="fa fa-ellipsis-h"></i>
-                    </span>
-                    <h4 class="text-section">Main Menu</h4>
-                </li>
-                <li class="nav-item {{ Request::path() == 'users' ? 'active' : '' }}">
-                    <a href="{{ url('users') }}">
-                        <i class="fas fa-users"></i>
-                        <p>User</p>
-                    </a>
-                </li>
-                <li class="nav-item {{ Request::path() == 'jenis-dokumen' ? 'active' : '' }}">
-                    <a href="{{ url('jenis-dokumen') }}">
-                        <i class="fas fa-file-alt"></i>
-                        <p>Jenis Dokumen</p>
-                    </a>
-                </li>
-                <li class="nav-item {{ Request::path() == 'anggota-tim' ? 'active' : '' }}">
-                    <a href="{{ url('anggota-tim') }}">
-                        <i class="fas fa-users-cog"></i>
-                        <p>Anggota Tim</p>
-                    </a>
-                </li>
+
+                @if (auth()->user()->role == 'admin')
+                    <li class="nav-section">
+                        <span class="sidebar-mini-icon">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </span>
+                        <h4 class="text-section">Main Menu</h4>
+                    </li>
+                    <li class="nav-item {{ Request::path() == 'users' ? 'active' : '' }}">
+                        <a href="{{ url('users') }}">
+                            <i class="fas fa-users"></i>
+                            <p>User</p>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ Request::path() == 'jenis-dokumen' ? 'active' : '' }}">
+                        <a href="{{ url('jenis-dokumen') }}">
+                            <i class="fas fa-file-alt"></i>
+                            <p>Jenis Dokumen</p>
+                        </a>
+                    </li>
+                @endif
+
+                @if (auth()->user()->role == 'user')
+                    <li class="nav-item {{ Request::path() == 'anggota-tim' ? 'active' : '' }}">
+                        <a href="{{ url('anggota-tim') }}">
+                            <i class="fas fa-users-cog"></i>
+                            <p>Anggota Tim</p>
+                        </a>
+                    </li>
+                @endif
+
                 <li class="nav-section">
                     <span class="sidebar-mini-icon">
                         <i class="fa fa-ellipsis-h"></i>
                     </span>
                     <h4 class="text-section">Pengajuan</h4>
                 </li>
-                <li class="nav-item {{ Request::path() == 'dokumen' ? 'active' : '' }}">
-                    <a href="{{ url('dokumen') }}">
-                        <i class="fas fa-file-upload"></i>
-                        <p>Pengajuan Dokumen</p>
-                    </a>
-                </li>
-                <li class="nav-item {{ Request::path() == 'review' ? 'active' : '' }}">
-                    <a href="{{ url('review') }}">
-                        <i class="fas fa-file-upload"></i>
-                        <p>Review Dokumen</p>
-                    </a>
-                </li>
 
+                @if (auth()->user()->role == 'user')
+                    <li class="nav-item {{ Request::path() == 'dokumen' ? 'active' : '' }}">
+                        <a href="{{ url('dokumen') }}">
+                            <i class="fas fa-file-upload"></i>
+                            <p>Pengajuan Dokumen</p>
+                        </a>
+                    </li>
+                @endif
+
+                @if (auth()->user()->role == 'reviewer')
+                    <li class="nav-item {{ Request::path() == 'review' ? 'active' : '' }}">
+                        <a href="{{ url('review') }}">
+                            <i class="fas fa-file-upload"></i>
+                            <p>Review Dokumen</p>
+                        </a>
+                    </li>
+                @endif
+                <li class="nav-item {{ Request::path() == 'riwayat' ? 'active' : '' }}">
+                    <a href="{{ url('riwayat') }}">
+                        <i class="fas fa-history"></i>
+                        <p>Riwayat</p>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
